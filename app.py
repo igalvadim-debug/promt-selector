@@ -1,5 +1,8 @@
 import gradio as gr
 import json
+import zipfile
+import os
+import io
 
 
 # Default negative prompt for Text-to-Image
@@ -213,7 +216,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {{
 
 
 def save_node_files(node_code, node_name):
-    """Save the generated node code to files"""
+    """Save the generated node code to files and create a ZIP archive"""
     node_filename = f"{node_name.lower()}.py"
     
     # Save the node file
@@ -229,7 +232,13 @@ __all__ = ['NODE_CLASS_MAPPINGS', 'NODE_DISPLAY_NAME_MAPPINGS']
     with open('__init__.py', 'w', encoding='utf-8') as f:
         f.write(init_content)
     
-    return f"✓ Files created: {node_filename} and __init__.py"
+    # Create ZIP archive
+    zip_filename = f"{node_name.lower()}_node.zip"
+    with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        zipf.write(node_filename, node_filename)
+        zipf.write('__init__.py', '__init__.py')
+    
+    return f"✓ Files created: {node_filename}, __init__.py and {zip_filename}"
 
 
 # Gradio Interface
