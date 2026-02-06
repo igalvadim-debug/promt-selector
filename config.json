@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "name": "PromptSelectorNode",
+      "author": "DeinName",
+      "category": "Custom",
+      "description": "Select a positive/negative prompt from dropdown",
+      "type": "python_script",
+      "script": "prompt_selector_node.py"
+    }
+  ]
+}
